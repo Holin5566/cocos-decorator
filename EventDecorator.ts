@@ -4,7 +4,7 @@
  * @param lifeCycle  執行時機
  */
 export function watchEvent(name: string, lifeCycle: "start" | "onEnable" = "start") {
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    return function <T extends cc.Component>(target: T, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = target[lifeCycle];
         const lisenter = descriptor.value;
 
@@ -22,7 +22,7 @@ export function watchEvent(name: string, lifeCycle: "start" | "onEnable" = "star
 
 /** 劫持被裝飾的方法，調用時移除節點上的監聽 */
 export function removeEvent(name: string) {
-    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    return function <T extends cc.Component>(target: T, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = target[propertyKey];
 
         Object.defineProperty(target, propertyKey, {

@@ -42,11 +42,11 @@ export function initState(name: string) {
             writable: true,
         });
 
-        // onDestory 階段清理變數
-        const originalOnDestory = target["onDestory"];
-        Object.defineProperty(target, "onDestory", {
+        // onDestroy 階段清理變數
+        const originalOnDestroy = target["onDestroy"];
+        Object.defineProperty(target, "onDestroy", {
             value: function () {
-                originalOnDestory?.call(this);
+                originalOnDestroy?.call(this);
                 _val = null;
                 _stateNameSet.delete(name);
             },
@@ -82,11 +82,11 @@ export function selectState(name: string) {
             writable: true,
         });
 
-        // onDestory 階段移除監聽 state 變化
-        const originalOnDestory = target["onDestory"];
-        Object.defineProperty(target, "onDestory", {
+        // onDestroy 階段移除監聽 state 變化
+        const originalOnDestroy = target["onDestroy"];
+        Object.defineProperty(target, "onDestroy", {
             value: function () {
-                originalOnDestory?.call(this);
+                originalOnDestroy?.call(this);
                 cc.systemEvent.off(`_state_${name}_change_`, listener, this);
             },
             configurable: true,
